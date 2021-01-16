@@ -1,0 +1,25 @@
+#log-in, #sign-up {
+    background: #E9ECEF;
+    padding: 32px;
+}
+#form {
+    width: 384px;
+    max-width: 384px;
+    padding: 32px;
+    text-align: center;
+    background-color: white;
+}
+.form-title {
+    font-size: 20px;
+    margin: 16px 0 32px 0;
+}
+.submit-button {
+    width: 220px;
+    margin: 16px auto;
+    display: block;
+}
+a {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 24px;
+}

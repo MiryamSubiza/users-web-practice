@@ -7,18 +7,16 @@ import { AuthenticationService } from '../core/services/authentication.service';
 @Component({
     selector: 'app-log-in',
     templateUrl: './log-in.component.html',
-    styleUrls: ['./log-in.component.css']
+    styleUrls: ['../app.component.css', './log-in.component.css'],
 })
 export class LogInComponent implements OnInit {
 
     public logInForm: FormGroup;
-    public apiError: boolean;
-    public authError: boolean;
 
     constructor(
+        public authenticationService: AuthenticationService,
         private formBuilder: FormBuilder,
         private router: Router,
-        private authenticationService: AuthenticationService,
     ) {
         if (this.authenticationService.isAuthenticated) {
             this.router.navigate(['/']);
@@ -30,32 +28,11 @@ export class LogInComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
         });
-
-        this.logInForm.valueChanges
-            .subscribe(() => {
-                this.apiError = false;
-                this.authError = false;
-            });
     }
 
-    signIn(): void {
-        this.authError = false;
-        this.apiError = false;
-
+    logIn(): void {
         if (this.logInForm.valid) {
-            this.authenticationService.logIn(this.logInForm.value.email, this.logInForm.value.password)
-                .then((token) => {
-                    if (token) {
-                        this.router.navigate(['/']);
-                    }
-                })
-                .catch((error) => {
-                    if (!error || (error && error.status === 401)) {
-                        this.authError = true;
-                    } else {
-                        this.apiError = true;
-                    }
-                });
+            this.authenticationService.logIn(this.logInForm.value.email, this.logInForm.value.password);
         }
     }
 }

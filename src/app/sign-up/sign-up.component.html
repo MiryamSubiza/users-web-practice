@@ -1,0 +1,61 @@
+<div id="sign-up" fxFlexFill fxLayout="column" fxLayoutAlign="center center">
+
+  <div id="form" class="mat-elevation-z2">
+
+    <div class="form-title">Registrarse</div>
+
+    <form name="signUpForm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+
+      <mat-form-field fxFlexFill>
+        <input matInput type="text" [placeholder]="'Nombre'" formControlName="name" required />
+        <mat-error>
+          Campo requerido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input matInput type="number" [placeholder]="'Edad'" formControlName="age" required [min]="MIN_AGE"
+          [max]="MAX_AGE" />
+        <mat-error *ngIf="signUpForm.controls.age.hasError('required')">
+          Campo requerido.
+        </mat-error>
+        <mat-error *ngIf="signUpForm.controls.age.hasError('min')">
+          La edad mínima es {{ MIN_AGE }}.
+        </mat-error>
+        <mat-error *ngIf="signUpForm.controls.age.hasError('max')">
+          La edad máxima es {{ MAX_AGE }}.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input matInput type="email" [placeholder]="'Correo electrónico'" #email name="email" formControlName="email"
+          required />
+        <mat-error *ngIf="signUpForm.controls.email.hasError('required')">
+          Campo requerido.
+        </mat-error>
+        <mat-error *ngIf="signUpForm.controls.email.hasError('email')">
+          El formato no es correcto.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input matInput type="password" [placeholder]="'Contraseña'" #password name="password"
+          formControlName="password" required />
+        <mat-error>
+          Campo requerido.
+        </mat-error>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="submit-button" [disabled]="signUpForm.invalid">
+        Enviar
+      </button>
+
+      <a [routerLink]="'/login'">
+        Iniciar sesión
+      </a>
+
+    </form>
+
+  </div>
+
+</div>

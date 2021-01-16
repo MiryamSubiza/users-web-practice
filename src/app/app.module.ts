@@ -8,11 +8,18 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { LogInModule } from './log-in/log-in.module';
+import { SignUpModule } from './sign-up/sign-up.module';
+import { UsersModule } from './users/users.module';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'users',
+    pathMatch: 'full'
+  },
+  {
     path: '**',
-    redirectTo: ''
+    redirectTo: 'users'
   }
 ];
 
@@ -27,6 +34,8 @@ const routes: Routes = [
     FlexLayoutModule,
     HttpClientModule,
     LogInModule,
+    UsersModule,
+    SignUpModule,
     RouterModule.forRoot(routes),
   ],
   providers: [],

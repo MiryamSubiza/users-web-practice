@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-import { Credentials } from 'src/app/log-in/models/credentials';
-import { User } from 'src/app/users/models/User';
+import { IUser } from 'src/app/users/models/User';
 
-let users: User[] = JSON.parse(localStorage.getItem('users')) || [];
+let users: IUser[] = JSON.parse(localStorage.getItem('users')) || [];
 
 @Injectable({
     providedIn: 'root',
@@ -18,8 +18,12 @@ export class AuthenticationService {
     private tokenSource = new BehaviorSubject<string>(null);
     public token$ = this.tokenSource.asObservable();
 
+    private errorMessageSource = new BehaviorSubject<string>(null);
+    public errorMessage$ = this.errorMessageSource.asObservable();
+
     constructor(
         private http: HttpClient,
+        private router: Router,
     ) {
         if (!this.hasToken && this.hasLocalStorageToken) {
             this.token = this.localStorageToken;
@@ -62,33 +66,34 @@ export class AuthenticationService {
         return !!this.localStorageToken;
     }
 
-    public logIn(email: string, password: string): Promise<string | Error> {
-        return new Promise((resolve, reject) => {
-            if (this.mode === 'VOLATILE') {
-                const user = users.find((user) => user.email === email && user.password === password);
-                if (user === undefined) {
-                    this.token = null;
-                    reject();
-                } else {
-                    this.token = user.email;
-                    resolve(this.token);
-                }
+    public logIn(email: string, password: string): void {
+        if (this.mode === 'VOLATILE') {
+            const user = users.find((user) => user.email === email && user.password === password);
+            if (user === undefined) {
+                this.token = null;
+                this.errorMessageSource.next('Correo electrónico o contraseña incorrectos.');
             } else {
-                const credentials = new Credentials(email, password);
-                this.http.post<Credentials>('/users/login', credentials)
-                    .subscribe((user: User) => {
-                        this.token = user.email;
-                        resolve(this.token);
-                    }, (error) => {
-                        this.token = null;
-                        reject(error);
-                    });
+                this.token = user.email;
+                this.router.navigate(['/']);
             }
-        });
+        }
     }
 
     /* logOut() {
         this.token = null;
         this.router.navigate(['/login']);
     } */
+
+    signUp(user: IUser): void {
+        if (this.mode === 'VOLATILE') {
+            if (users.find((u) => u.email === user.email) !== undefined) {
+                this.errorMessageSource.next('Ya existe un usuario con este correo electrónico.');
+            } else {
+                users.push(user);
+                localStorage.setItem('users', JSON.stringify(users));
+                this.logIn(user.email, user.password);
+            }
+        } else {
+        }
+    }
 }
