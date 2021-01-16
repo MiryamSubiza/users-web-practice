@@ -1,1 +1,46 @@
-<p>Users list works!</p>
+<mat-toolbar color="primary" fxLayout="row" fxLayoutAlign="space-between center">
+
+    <span class="panel-title"> Listado de usuarios registrados </span>
+
+    <div>
+        <mat-form-field>
+            <input matInput type="text" placeholder="Filtrar" (keyup)="filterUsers($event.target.value)"
+                autocomplete="off">
+        </mat-form-field>
+        <button mat-icon-button matTooltip="Cerrar sesión" (click)="authenticationService.logOut()">
+            <mat-icon>exit_to_app</mat-icon>
+        </button>
+    </div>
+
+</mat-toolbar>
+
+<div class="table-container">
+    <table *ngIf="filteredUsers; else errorBlock" mat-table [dataSource]="filteredUsers" class="mat-elevation-z8"
+        matSort>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let user"> {{ user.name }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="age">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Edad </th>
+            <td mat-cell *matCellDef="let user"> {{ user.age }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo electrónico </th>
+            <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+    </table>
+</div>
+
+<ng-template #errorBlock>
+    <span fxFlex id="error">Error cargando el listado de usuarios.</span>
+</ng-template>

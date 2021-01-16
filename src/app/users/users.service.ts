@@ -1,19 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { IUser } from './models/User';
 
 @Injectable()
 export class UsersService {
 
-  private usersUrl: string;
+  private readonly usersUrl = 'http://localhost:8080/users/fromdb';
 
-  constructor(private http: HttpClient) {
-    this.usersUrl = 'http://localhost:8080/users';
+  private usersSource = new BehaviorSubject<IUser[]>(null);
+  public users$ = this.usersSource.asObservable();
+
+  constructor(
+    private http: HttpClient,
+  ) { }
+
+  set users(users: IUser[]) {
+    this.usersSource.next(users);
   }
 
-  public listUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(this.usersUrl);
+  get users(): IUser[] {
+    return this.usersSource.getValue();
+  }
+
+  public loadUsers(): void {
+    this.users = JSON.parse(localStorage.getItem('users'));
+
+    /*this.http.get<IUser[]>(this.usersUrl)
+      .subscribe((users) => {
+        console.log('users', users)
+        this.users = users || [];
+      }, () => {
+        this.users = undefined;
+      });*/
   }
 }

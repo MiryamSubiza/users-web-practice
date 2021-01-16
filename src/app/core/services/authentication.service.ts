@@ -74,15 +74,16 @@ export class AuthenticationService {
                 this.errorMessageSource.next('Correo electrónico o contraseña incorrectos.');
             } else {
                 this.token = user.email;
-                this.router.navigate(['/']);
+                this.router.navigate(['/']);                
+                this.errorMessageSource.next(null);
             }
         }
     }
 
-    /* logOut() {
+    logOut() {
         this.token = null;
         this.router.navigate(['/login']);
-    } */
+    }
 
     signUp(user: IUser): void {
         if (this.mode === 'VOLATILE') {
@@ -91,6 +92,7 @@ export class AuthenticationService {
             } else {
                 users.push(user);
                 localStorage.setItem('users', JSON.stringify(users));
+                this.errorMessageSource.next(null);
                 this.logIn(user.email, user.password);
             }
         } else {
