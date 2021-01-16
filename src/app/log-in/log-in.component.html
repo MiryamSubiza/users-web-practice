@@ -1,0 +1,44 @@
+<div id="log-in" fxFlexFill fxLayout="column" fxLayoutAlign="center center">
+
+  <div id="log-in-form" class="mat-elevation-z2">
+
+    <div class="title">Iniciar sesión</div>
+
+    <form name="logInForm" [formGroup]="logInForm" (ngSubmit)="signIn()">
+
+      <mat-form-field fxFlexFill>
+        <input matInput type="email" [placeholder]="'Correo electrónico'" #email name="email" formControlName="email"
+          required />
+        <mat-error *ngIf="logInForm.controls.email.hasError('required')">
+          Campo requerido.
+        </mat-error>
+        <mat-error *ngIf="logInForm.controls.email.hasError('email')">
+          El formato no es correcto.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlexFill>
+        <input matInput type="password" [placeholder]="'Contraseña'" #password name="password"
+          formControlName="password" required />
+        <mat-error>
+          Campo requerido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-error *ngIf="apiError">
+        <small>No se ha podido iniciar sesión, inténtelo más tarde.</small>
+      </mat-error>
+
+      <mat-error *ngIf="authError">
+        <small>Correo electrónico o contraseña incorrectos.</small>
+      </mat-error>
+
+      <button mat-raised-button color="primary" class="submit-button" [disabled]="logInForm.invalid">
+        Iniciar sesión
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
