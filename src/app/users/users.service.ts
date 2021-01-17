@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
 import { IUser } from './models/User';
+import { environment } from 'src/environments/environment';
+import { usersUrl } from '../core/routes';
 
 @Injectable()
 export class UsersService {
-
-  private readonly usersUrl = 'http://localhost:8080/users/fromdb';
 
   private usersSource = new BehaviorSubject<IUser[]>(null);
   public users$ = this.usersSource.asObservable();
@@ -25,14 +25,16 @@ export class UsersService {
   }
 
   public loadUsers(): void {
-    this.users = JSON.parse(localStorage.getItem('users'));
+    if (environment.memory === 'persistent') {
+      this.http.get<IUser[]>(usersUrl)
+        .subscribe((users) => {
+          this.users = users || [];
+        }, () => {
+          this.users = undefined;
+        });
+    } else if (environment.memory === 'volatile') {
+      this.users = JSON.parse(localStorage.getItem('users'));
+    }
 
-    /*this.http.get<IUser[]>(this.usersUrl)
-      .subscribe((users) => {
-        console.log('users', users)
-        this.users = users || [];
-      }, () => {
-        this.users = undefined;
-      });*/
   }
 }
