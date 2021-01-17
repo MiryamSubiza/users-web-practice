@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../core/services/authentication.service';
+import { Credentials } from '../log-in/models/credentials';
 
 @Component({
   selector: 'app-sign-up',
@@ -17,7 +18,7 @@ export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup;
 
   constructor(
-    private authenticationService: AuthenticationService,
+    public authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
     private router: Router,
   ) {
@@ -37,7 +38,11 @@ export class SignUpComponent implements OnInit {
 
   signUp(): void {
     if (this.signUpForm.valid) {
-      this.authenticationService.signUp(this.signUpForm.value);
+      const formValues = this.signUpForm.value;
+      const credentials = new Credentials(formValues.email, formValues.password);
+      formValues.password = credentials.password;
+
+      this.authenticationService.signUp(formValues);
     }
   }
 }

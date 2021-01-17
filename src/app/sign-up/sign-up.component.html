@@ -46,6 +46,10 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-error *ngIf="authenticationService.errorMessage$ | async; let message">
+        <small>{{ message }}</small>
+      </mat-error>
+
       <button mat-raised-button color="primary" class="submit-button" [disabled]="signUpForm.invalid">
         Enviar
       </button>
