@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../core/services/authentication.service';
+import { Credentials } from './models/credentials';
 
 @Component({
     selector: 'app-log-in',
@@ -20,6 +21,8 @@ export class LogInComponent implements OnInit {
     ) {
         if (this.authenticationService.isAuthenticated) {
             this.router.navigate(['/']);
+        } else {
+            this.authenticationService.errorMessage = null;
         }
     }
 
@@ -32,7 +35,8 @@ export class LogInComponent implements OnInit {
 
     logIn(): void {
         if (this.logInForm.valid) {
-            this.authenticationService.logIn(this.logInForm.value.email, this.logInForm.value.password);
+            const credentials = new Credentials(this.logInForm.value.email, this.logInForm.value.password);
+            this.authenticationService.logIn(credentials);
         }
     }
 }
