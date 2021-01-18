@@ -9,7 +9,7 @@ import { usersUrl } from '../core/routes';
 @Injectable()
 export class UsersService {
 
-  private usersSource = new BehaviorSubject<IUser[]>(null);
+  private usersSource = new BehaviorSubject<IUser[]>([]);
   public users$ = this.usersSource.asObservable();
 
   constructor(

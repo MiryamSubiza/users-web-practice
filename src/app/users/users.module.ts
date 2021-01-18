@@ -6,7 +6,6 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatPaginatorModule } from "@angular/material/paginator";
-import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTooltipModule } from "@angular/material/tooltip";
@@ -34,7 +33,6 @@ const routes: Routes = [
         MatIconModule,
         MatInputModule,
         MatPaginatorModule,
-        MatSortModule,
         MatTableModule,
         MatToolbarModule,
         MatTooltipModule,
