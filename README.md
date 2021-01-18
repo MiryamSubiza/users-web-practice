@@ -19,7 +19,7 @@ Esta práctica consiste en realizar una aplicación Web compuesta por tres panta
   
   Para poder seleccionar el modo de almacenamiento, se dispone de una variable de configuración que se puede modificar en el fichero `src/environments/environment.ts`.
   
-  En caso de seleccionar el modo de almacenamiento persistente, indicar en este mismo fichero la URL de acceso a la API.
+  En caso de seleccionar el modo de almacenamiento persistente, indicar en este mismo fichero la URL de acceso a la API ().
 
 **2.- Ventana de autenticación**
 
@@ -27,7 +27,7 @@ Esta práctica consiste en realizar una aplicación Web compuesta por tres panta
   
   Se validarán las credenciales introducidas por el usuario, mostrando los mensajes oportunos de error (las credenciales no son correctas, no se ha indicado el campo de correo electrónico o es incorrecto su formato y no se ha indicado el campo de contraseña).
   
-  Si la validación de las credenciales es correcta, se mostrará la ventana de Listado de usuarios registrados.
+  Si la validación de las credenciales es correcta, se mostrará la pantalla de Listado de usuarios registrados.
 
 **3.- Listado de usuarios registrados**
 
