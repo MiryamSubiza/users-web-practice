@@ -31,6 +31,11 @@ export class LogInComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
         });
+
+        this.logInForm.valueChanges
+            .subscribe(() => {
+                this.authenticationService.errorMessage = null;
+            });
     }
 
     logIn(): void {

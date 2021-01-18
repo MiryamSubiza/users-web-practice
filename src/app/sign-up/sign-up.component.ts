@@ -24,6 +24,8 @@ export class SignUpComponent implements OnInit {
   ) {
     if (this.authenticationService.isAuthenticated) {
       this.router.navigate(['/']);
+    } else {
+      this.authenticationService.errorMessage = null;
     }
   }
 
