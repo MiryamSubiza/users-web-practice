@@ -36,6 +36,6 @@ Esta práctica consiste en realizar una aplicación Web compuesta por tres panta
   
   Se mostrará un mensaje de error en caso de no haber podido cargar dicho listado.
   
-## Lenguaje de programación
+## Software requerido
 - Angular 11
 
