@@ -2,6 +2,7 @@
 
     Autora: Miryam Subiza Erro
     Proyecto: Desarrollo de una aplicación Web para gestionar el registro de usuarios
+    Back-end: https://github.com/MiryamSubiza/users-api-practice
 
 ## Descripción
 Esta práctica consiste en realizar una aplicación Web compuesta por tres pantallas:
@@ -19,7 +20,7 @@ Esta práctica consiste en realizar una aplicación Web compuesta por tres panta
   
   Para poder seleccionar el modo de almacenamiento, se dispone de una variable de configuración que se puede modificar en el fichero `src/environments/environment.ts`.
   
-  En caso de seleccionar el modo de almacenamiento persistente, indicar en este mismo fichero la URL de acceso a la API ().
+  En caso de seleccionar el modo de almacenamiento persistente, indicar en este mismo fichero la URL de acceso a la API.
 
 **2.- Ventana de autenticación**
 
